@@ -11,3 +11,30 @@ services:
       - 27017:27017
     volumes:
       - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on: 
+      - mongodb_container
+    environment: 
+      MONGO_URL: mongodb://root:root-password@localhost:27017/
+    networks:
+      - backend
+
+  react_app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on: 
+      - api
+
+    networks:
+      - backend

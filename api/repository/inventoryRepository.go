@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"shopify-challenge/models"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -13,7 +14,7 @@ type inventoryRepository struct {
 }
 
 func NewInventoryRepository(DB *mongo.Database) models.InventoryRepository {
-	return &inventoryRepository {
+	return &inventoryRepository{
 		db: DB.Collection("inventory"),
 	}
 }
@@ -44,4 +45,3 @@ func (store *inventoryRepository) Update(inventory *models.Inventory) error {
 	result, err := store.db.ReplaceOne(context.TODO(), bson.D{{"_id", inventory.id}}, inventory)
 	return err
 }
-
