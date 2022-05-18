@@ -1,16 +1,6 @@
 version: '3.7'
-services:
-  mongodb_container:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root-password
-      MONGO_INITDB_DATABASE: admin
 
-    ports:
-      - 27017:27017
-    volumes:
-      - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+services:
 
   api:
     build:
@@ -36,5 +26,5 @@ services:
     depends_on: 
       - api
 
-    networks:
-      - backend
+networks:
+  backend:
