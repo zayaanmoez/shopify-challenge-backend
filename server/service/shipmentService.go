@@ -56,6 +56,8 @@ func (service *ShipmentService) CreateShipment(c *gin.Context) {
 		return
 	}
 
+	shipment.Id = primitive.NewObjectID()
+
 	result, err := service.shipmentRepository.Insert(ctx, &shipment)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"create Shipment error": err.Error()})
@@ -156,6 +158,7 @@ func (service *ShipmentService) ReceiveShipment(c *gin.Context) {
 			service.inventoryRepository.IncreaseStock(ctx, inventory.Id, item.Stock)
 		} else {
 			inventory := models.Inventory{
+				Id:          primitive.NewObjectID(),
 				Name:        item.Name,
 				City:        shipment.City,
 				Warehouse:   shipment.Warehouse,

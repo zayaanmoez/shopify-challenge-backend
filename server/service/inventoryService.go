@@ -54,6 +54,8 @@ func (service *InventoryService) AddInventory(c *gin.Context) {
 		return
 	}
 
+	inventory.Id = primitive.NewObjectID()
+
 	result, err := service.inventoryRepository.Insert(ctx, &inventory)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"create inventory error": err.Error()})

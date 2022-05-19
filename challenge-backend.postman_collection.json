@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "00d39738-16cb-4928-8fba-3b1114168c8b",
+		"name": "challenge-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Shipments",
+			"item": [
+				{
+					"name": "List all Shipments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shipments",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shipments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shipment By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shipment/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shipment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shipment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"label\": \"Shipment1\",\r\n  \"city\": \"London\",\r\n  \"warehouse\": \"Warehouse-London1\",\r\n  \"status\": \"created\",\r\n  \"items\": [\r\n      {\r\n        \"inventoryId\": \"62858d9cc25f5fcb4e3f405b\",\r\n        \"name\": \"Product 2\",\r\n        \"stock\": 500,\r\n        \"costPerUnit\": 35.5\r\n      },\r\n      {\r\n        \"inventoryId\": \"6285a9bda447695fd10d9750\",\r\n        \"name\": \"Product 1\",\r\n        \"stock\": 50,\r\n        \"costPerUnit\": 10.00\r\n      }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/shipment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shipment"
+							]
+						},
+						"description": "*City: Destination city\n*Warehouse: Destination warehouse\n\n{\n*status:  \n*created \"no change in inventory\"\n\n*shipped \"deliver shipment api updates to shipped. Inventory moved out of source warehouse\"\n\n*received \"receive shipment api updates to received. Shipment items added to destination warehouse, city. If a product with  name exists at warehouse, city, stock is updated otherwise a new object is created\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "Deliver Shipment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shipment/:id/deliver",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shipment",
+								":id",
+								"deliver"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6285b0b379d99ff1a2907c44"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recieve Shipment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/shipment/:id/receive",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shipment",
+								":id",
+								"receive"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6285b0b379d99ff1a2907c44"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "#Shipments API\n\n###Locations [city, [warehouses]]\n* \"London\":  [\"Warehouse-London1\", \"Warehouse-London2\"]\n* \"New York City\": [\"Warehouse-NewYorkCity1\", \"Warehouse-NewYorkCity2\"]\n* \"Paris\": [\"Warehouse-Paris1\", \"Warehouse-Paris2\"]\n* \"Sydney\": [\"Warehouse-Sydney1\", \"Warehouse-Sydney2\"]\n* \"Tokyo\": {\"Warehouse-Tokyo1\", \"Warehouse-Tokyo2\"]\n\n*City: Destination city *Warehouse: Destination warehouse\n\n{ *status:\n*created \"no change in inventory\"\n\n*shipped \"deliver shipment api updates to shipped. Inventory moved out of source warehouse\"\n\n*received \"receive shipment api updates to received. Shipment items added to destination warehouse, city. If a product with name exists at warehouse, city, stock is updated otherwise a new object is created\" }\n\nPlease choose the valid city, warehouse pair.\nShipments can contain multiple items from same location. If a shipment contains items from different locations, behaviour maybe be undefined."
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Get Inventory By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/inventory/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inventory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all Inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/inventory",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Inventory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/inventory/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inventory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create inventory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Product 1\",\r\n  \"stock\": 100,\r\n  \"costPerUnit\": 10.00,\r\n  \"city\": \"London\",\r\n  \"warehouse\": \"Warehouse-London2\"  \r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/inventory",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inventory"
+							]
+						},
+						"description": "###Locations [city, [warehouses]]\n* \"London\":  [\"Warehouse-London1\", \"Warehouse-London2\"]\n* \"New York City\": [\"Warehouse-NewYorkCity1\", \"Warehouse-NewYorkCity2\"]\n* \"Paris\": [\"Warehouse-Paris1\", \"Warehouse-Paris2\"]\n* \"Sydney\": [\"Warehouse-Sydney1\", \"Warehouse-Sydney2\"]\n* \"Tokyo\": {\"Warehouse-Tokyo1\", \"Warehouse-Tokyo2\"]"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Inventory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Product 1\",\r\n  \"stock\": 100,\r\n  \"costPerUnit\": 10.00,\r\n  \"city\": \"London\",\r\n  \"warehouse\": \"Warehouse-London2\"  \r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/inventory/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"inventory",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Copy object body from GET response. _id not required. Add _id as query param."
+					},
+					"response": []
+				}
+			],
+			"description": "# Inventory API\n\n###Locations [city, [warehouses]]\n* \"London\":  [\"Warehouse-London1\", \"Warehouse-London2\"]\n* \"New York City\": [\"Warehouse-NewYorkCity1\", \"Warehouse-NewYorkCity2\"]\n* \"Paris\": [\"Warehouse-Paris1\", \"Warehouse-Paris2\"]\n* \"Sydney\": [\"Warehouse-Sydney1\", \"Warehouse-Sydney2\"]\n* \"Tokyo\": {\"Warehouse-Tokyo1\", \"Warehouse-Tokyo2\"]\n\nPlease choose valid (city, warehouse) pair to prevent undefined behaviour in shipments api."
+		}
+	]
+}

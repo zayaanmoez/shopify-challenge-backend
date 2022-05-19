@@ -32,7 +32,7 @@ func (store *ShipmentRepository) Insert(ctx context.Context, shipment *models.Sh
 }
 
 func (store *ShipmentRepository) FindOne(ctx context.Context, id primitive.ObjectID) *mongo.SingleResult {
-	result := store.db.FindOne(ctx, bson.M{"_id": id})
+	result := store.db.FindOne(ctx, bson.M{"_id": bson.M{"$eq": id}})
 	return result
 }
 
@@ -42,7 +42,7 @@ func (store *ShipmentRepository) FindAll(ctx context.Context) (*mongo.Cursor, er
 }
 
 func (store *ShipmentRepository) UpdateStatus(ctx context.Context, shipmentId primitive.ObjectID, status string) (*mongo.UpdateResult, error) {
-	result, err := store.db.UpdateByID(ctx, bson.M{"_id": shipmentId},
+	result, err := store.db.UpdateOne(ctx, bson.M{"_id": bson.M{"$eq": shipmentId}},
 		bson.M{"$set": bson.M{"status": status}})
 	return result, err
 }

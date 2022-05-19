@@ -32,12 +32,12 @@ func (store *InventoryRepository) Insert(ctx context.Context, inventory *models.
 }
 
 func (store InventoryRepository) FindOne(ctx context.Context, id primitive.ObjectID) *mongo.SingleResult {
-	result := store.db.FindOne(ctx, bson.M{"_id": id})
+	result := store.db.FindOne(ctx, bson.M{"_id": bson.M{"$eq": id}})
 	return result
 }
 
 func (store *InventoryRepository) FindAtLocation(ctx context.Context, name string, city string, warehouse string) *mongo.SingleResult {
-	result := store.db.FindOne(ctx, bson.M{"name": name, "city": city, "warehouse": warehouse})
+	result := store.db.FindOne(ctx, bson.M{"name": bson.M{"$eq": name}, "city": bson.M{"$eq": city}, "warehouse": bson.M{"$eq": warehouse}})
 	return result
 }
 
@@ -46,25 +46,26 @@ func (store *InventoryRepository) FindAll(ctx context.Context) (*mongo.Cursor, e
 	return result, err
 }
 
-func (store *InventoryRepository) Delete(ctx context.Context, inventoryID primitive.ObjectID) (*mongo.DeleteResult, error) {
-	result, err := store.db.DeleteOne(ctx, bson.M{"_id": inventoryID})
+func (store *InventoryRepository) Delete(ctx context.Context, inventoryId primitive.ObjectID) (*mongo.DeleteResult, error) {
+	result, err := store.db.DeleteOne(ctx, bson.M{"_id": bson.M{"$eq": inventoryId}})
 	return result, err
 }
 
 func (store *InventoryRepository) Update(ctx context.Context, inventoryId primitive.ObjectID, inventory *models.Inventory) (*mongo.UpdateResult, error) {
-	result, err := store.db.UpdateOne(ctx, bson.M{"_id": inventoryId},
-		bson.M{
+	result, err := store.db.UpdateOne(ctx, bson.M{"_id": bson.M{"$eq": inventoryId}},
+		bson.M{"$set": bson.M{
+			"_id":         inventoryId,
 			"name":        inventory.Name,
 			"stock":       inventory.Stock,
 			"costPerUnit": inventory.CostPerUnit,
 			"city":        inventory.City,
 			"warehouse":   inventory.Warehouse,
-		})
+		}})
 	return result, err
 }
 
 func (store *InventoryRepository) IncreaseStock(ctx context.Context, inventoryId primitive.ObjectID, stock int) (*mongo.UpdateResult, error) {
-	result, err := store.db.UpdateOne(ctx, bson.M{"_id": inventoryId},
+	result, err := store.db.UpdateOne(ctx, bson.M{"_id": bson.M{"$eq": inventoryId}},
 		bson.M{"$inc": bson.M{
 			"stock": stock,
 		}})
@@ -72,7 +73,7 @@ func (store *InventoryRepository) IncreaseStock(ctx context.Context, inventoryId
 }
 
 func (store *InventoryRepository) DecreaseStock(ctx context.Context, inventoryId primitive.ObjectID, stock int) (*mongo.UpdateResult, error) {
-	result, err := store.db.UpdateOne(ctx, bson.M{"_id": inventoryId},
+	result, err := store.db.UpdateOne(ctx, bson.M{"_id": bson.M{"$eq": inventoryId}},
 		bson.M{"$dec": bson.M{
 			"stock": stock,
 		}})

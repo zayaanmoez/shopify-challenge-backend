@@ -12,7 +12,7 @@ type ShipmentItem struct {
 }
 
 type Shipment struct {
-	Id        primitive.ObjectID `json:"id" bson:"id"`
+	Id        primitive.ObjectID `json:"_id" bson:"_id"`
 	Label     string             `json:"label"`
 	Items     []ShipmentItem     `json:"items"`
 	City      string             `json:"city"`
