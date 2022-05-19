@@ -4,18 +4,19 @@
 * Golang 1.16 or later
 * npm: 6.* or later (optional)
 ### Go Server Run
-'''sh
-cd server
-go build main.go
-go run main.go
-'''
+```sh
+  cd server
+  go build main.go
+  go run main.go
+```
 Runs at localhost:8080
 
 ### Client Run (Can only view data)
-'''sh
-npm install
-npm start
-'''
+
+```sh
+  npm install
+  npm start
+```
 
 Runs at localhost:3000
 
