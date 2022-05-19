@@ -14,6 +14,7 @@ Runs at localhost:8080
 ### Client Run (Can only view data)
 
 ```sh
+  cd client
   npm install
   npm start
 ```
